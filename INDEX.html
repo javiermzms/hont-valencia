@@ -6,36 +6,33 @@
     <title>Calculadora Llei d'Hondt - Província de València</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- FontAwesome for icons -->
+    <!-- FontAwesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
         .seat {
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;html
         }
         .seat:hover {
-            transform: scale(1.2);
+            transform: scale(1.25);
             z-index: 10;
         }
-        /* Custom scrollbar for table containers */
         .custom-scrollbar::-webkit-scrollbar {
             height: 6px;
             width: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #f1f5f9;
             border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 4px;
-        }
+        }html
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
@@ -43,32 +40,32 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Navbar -->
+    <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
                 <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-md">
-                    <i class="fa-solid me-1 fa-check-to-slot text-xl"></i>
+                    <i class="fa-solid fa-check-to-slot text-xl"></i>
                 </div>
                 <div>
                     <h1 class="text-xl font-bold text-slate-900 leading-tight">Assignació de Diputats - Província de València</h1>
                     <p class="text-xs text-slate-500">Calculadora del Sistema D'Hondt | Eleccions Valencianes i Generals</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
-                <button id="btnOpenReadme" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors shadow-sm">
-                    <i class="fa-brands fa-github text-base"></i>
-                    <span>Guia GitHub & README</span>
-                </button>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> Simulador Actiu
+                </span>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
+    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow space-y-8">
 
-        <!-- Banner de Configuració Rápida -->
+        <!-- Banner de Configuració Ràpida -->
         <section class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Diputats -->
             <div class="space-y-1">
                 <label for="totalSeats" class="block text-sm font-semibold text-slate-700">
                     <i class="fa-solid fa-chair text-indigo-600 mr-1.5"></i> Nombre de Diputats a Repartir
@@ -83,6 +80,7 @@
                 <p class="text-xs text-slate-500">Per defecte: 16 (Congrés) o 40 (Corts Valencianes).</p>
             </div>
 
+            <!-- Barrera Electoral -->
             <div class="space-y-1">
                 <label for="threshold" class="block text-sm font-semibold text-slate-700">
                     <i class="fa-solid fa-filter text-indigo-600 mr-1.5"></i> Barrera Electoral (%)
@@ -94,9 +92,10 @@
                         <button onclick="setThreshold(5)" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-xs font-medium rounded text-slate-700 transition">5% (Corts)</button>
                     </div>
                 </div>
-                <p class="text-xs text-slate-500">Mínim de vots vàlids per entrar al repartiment.</p>
+                <p class="text-xs text-slate-500">Mínim de vots vàlids per a poder obtindre escó.</p>
             </div>
 
+            <!-- Presets -->
             <div class="space-y-1">
                 <label class="block text-sm font-semibold text-slate-700">
                     <i class="fa-solid fa-bolt text-indigo-600 mr-1.5"></i> Carregar Dades d'Exemple
@@ -116,10 +115,10 @@
             </div>
         </section>
 
-        <!-- Secció Principal: Gestió de Partits i Hemicicle -->
+        <!-- Edició de Partits + Hemicicle -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <!-- Taula d'Edició de Partits (Columna Esquerra 5 cols) -->
+            <!-- Edició de Partits (5 Cols) -->
             <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex justify-between items-center mb-4">
@@ -142,7 +141,7 @@
                                 </tr>
                             </thead>
                             <tbody id="partyTableBody" class="divide-y divide-slate-100">
-                                <!-- Dynamic rows generated by JS -->
+                                <!-- Filera dinàmica -->
                             </tbody>
                         </table>
                     </div>
@@ -152,7 +151,7 @@
                     <div>
                         <span>Vots Totals: </span>
                         <strong id="totalVotesDisplay" class="text-slate-900 font-bold">0</strong>
-                    </div>
+                    </div>html
                     <div>
                         <span>Vots Vàlids Candidatures: </span>
                         <strong id="validVotesDisplay" class="text-slate-900 font-bold">0</strong>
@@ -160,7 +159,7 @@
                 </div>
             </div>
 
-            <!-- Visualització de l'Hemicicle i Resum (Columna Dreta 7 cols) -->
+            <!-- Hemicicle i Resum d'Escons (7 Cols) -->
             <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-6">
                 <div>
                     <div class="flex justify-between items-center mb-2">
@@ -172,28 +171,28 @@
                         </span>
                     </div>
 
-                    <!-- Representació Gràfica de l'Hemicicle -->
+                    <!-- Arc Parlamentari SVG -->
                     <div class="relative flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-100 min-h-[220px]">
                         <svg id="parliamentSvg" viewBox="0 0 400 210" class="w-full max-w-md h-auto overflow-visible">
-                            <!-- Arc de seients dibuixat dinàmicament -->
+                            <!-- Escons SVG -->
                         </svg>
                         <div id="parliamentSummary" class="text-center mt-2">
-                            <!-- Text dinàmic o majories -->
+                            <!-- Text dinàmic -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Llista Resum de Diputats Aconseguits -->
+                <!-- Resum de Diputats -->
                 <div>
                     <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Resum de Diputats Assignats</h3>
                     <div id="resultsSummaryList" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <!-- Generat dinàmicament -->
+                        <!-- Card dinàmica -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Taula Pas a Pas del Calculador D'Hondt -->
+        <!-- Taula Pas a Pas del Quocient D'Hondt -->
         <section class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <div>
@@ -216,11 +215,11 @@
                 <table class="w-full text-xs text-left border-collapse min-w-[600px]">
                     <thead>
                         <tr id="dhondtTableHeader" class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                            <!-- Headers dynamically created -->
+                            <!-- Capçaleres dinàmiques -->
                         </tr>
                     </thead>
                     <tbody id="dhondtTableBody" class="divide-y divide-slate-100">
-                        <!-- Dynamic matrix rows -->
+                        <!-- Fileres de la matriu -->
                     </tbody>
                 </table>
             </div>
@@ -228,7 +227,7 @@
 
     </main>
 
-    <!-- Footer -->
+    <!-- Footer -->html
     <footer class="bg-white border-t border-slate-200 py-6 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
             <p>Calculadora d'Assignació Electoral de la Província de València | Creat amb JavaScript, Tailwind CSS i HTML5.</p>
@@ -236,59 +235,7 @@
         </div>
     </footer>
 
-    <!-- Modal README / Instruccions GitHub -->
-    <div id="readmeModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
-            <!-- Modal Header -->
-            <div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                <div class="flex items-center gap-2 text-slate-900 font-bold text-lg">
-                    <i class="fa-brands fa-github text-2xl text-indigo-600"></i>
-                    <span>Instruccions de Publicació a GitHub Pages & README.md</span>
-                </div>
-                <button id="btnCloseReadme" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-200 transition">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
-            </div>
-
-            <!-- Modal Content -->
-            <div class="p-6 overflow-y-auto custom-scrollbar space-y-6 text-sm text-slate-700">
-                
-                <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-indigo-900 space-y-2">
-                    <h3 class="font-bold flex items-center gap-2">
-                        <i class="fa-solid fa-rocket text-indigo-600"></i> Com publicar aquesta web a GitHub Pages pas a pas:
-                    </h3>
-                    <ol class="list-decimal list-inside space-y-1 text-xs sm:text-sm pl-2">
-                        <li>Crea un compte a <a href="https://github.com" target="_blank" class="underline font-semibold">GitHub.com</a> si no en tens un.</li>
-                        <li>Crea un nou repositori públic anomenat, per exemple, <code class="bg-indigo-100 px-1 py-0.5 rounded text-indigo-800">hont-valencia</code>.</li>
-                        <li>Guarda el codi d'aquesta pàgina en un fitxer anomenat <code class="bg-indigo-100 px-1 py-0.5 rounded text-indigo-800">index.html</code>.</li>
-                        <li>Copia el text del <code class="bg-indigo-100 px-1 py-0.5 rounded text-indigo-800">README.md</code> que tens a continuació i guarda'l a l'arrel del teu repositori.</li>
-                        <li>Puja tots dos fitxers (<code class="bg-indigo-100 px-1 py-0.5 rounded text-indigo-800">index.html</code> i <code class="bg-indigo-100 px-1 py-0.5 rounded text-indigo-800">README.md</code>) al repositori de GitHub.</li>
-                        <li>Ves a <strong>Settings &gt; Pages</strong> al teu repositori de GitHub, selecciona la branca <code class="bg-indigo-100 px-1 py-0.5 rounded text-indigo-800">main</code> i guarda.</li>
-                        <li>En uns minuts, la teua web estarà en línia a <code class="bg-indigo-100 px-1 py-0.5 rounded text-indigo-800">https://el-teu-usuari.github.io/hont-valencia/</code>.</li>
-                    </ol>
-                </div>
-
-                <div class="space-y-2">
-                    <div class="flex justify-between items-center">
-                        <h4 class="font-bold text-slate-900">Contingut del fitxer README.md</h4>
-                        <button onclick="copyReadmeContent()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 transition">
-                            <i class="fa-regular fa-copy"></i> Copiar README
-                        </button>
-                    </div>
-                    <textarea id="readmeTextarea" readonly class="w-full h-80 bg-slate-900 text-slate-100 p-4 font-mono text-xs rounded-xl focus:outline-none resize-none border border-slate-800"></textarea>
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex justify-end">
-                <button id="btnCloseReadmeFooter" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold px-4 py-2 text-xs rounded-lg transition">
-                    Tancar
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Application Logic Script -->
+    <!-- Llogica JavaScript -->
     <script>
         // Preset Datasets
         const presets = {
@@ -318,14 +265,14 @@
             }
         };
 
-        // Current Application State
+        // Estado actual
         let state = {
             seats: 16,
-            threshold: 3,
+            threshold: 3,html
             parties: JSON.parse(JSON.stringify(presets.generals2023.parties))
         };
 
-        // DOM Elements
+        // Elementos DOM
         const totalSeatsInput = document.getElementById('totalSeats');
         const thresholdInput = document.getElementById('threshold');
         const partyTableBody = document.getElementById('partyTableBody');
@@ -338,77 +285,11 @@
         const parliamentSvg = document.getElementById('parliamentSvg');
         const parliamentSummary = document.getElementById('parliamentSummary');
 
-        // Modal Elements
-        const readmeModal = document.getElementById('readmeModal');
-        const btnOpenReadme = document.getElementById('btnOpenReadme');
-        const btnCloseReadme = document.getElementById('btnCloseReadme');
-        const btnCloseReadmeFooter = document.getElementById('btnCloseReadmeFooter');
-        const readmeTextarea = document.getElementById('readmeTextarea');
-
-        // Text for README.md
-        const readmeMarkdown = `# Calculadora Assignació de Diputats - Província de València (Llei d'Hondt)
-
-Aquesta aplicació web interactiva permet simular i calcular el repartiment de diputats de la província de València utilitzant el **sistema d'Hondt** (Llei d'Hondt), tant per a les **Eleccions Generals** (16 diputats al Congrés) com per a les **Eleccions Autonòmiques** (40 diputats a les Corts Valencianes).
-
-## 🚀 Característiques i Funcionalitats
-
-- **Totalment Editable:** Modifica el nom de qualsevol partit o el seu nombre de vots en temps real.
-- **Gestió Dinàmica:** Afegeix nous partits o elimina'ls fàcilment.
-- **Paràmetres Configurables:** Ajusta el nombre de diputats totals a repartir i la barrera electoral (ex. 3% per a la LOREG / Generals, 5% per a Corts Valencianes).
-- **Preset de Dades Reals:** Botons per a carregar instantàniament els resultats reals de la província de València (Generals 2023 i Corts Valencianes 2023).
-- **Visualització Pas a Pas:** Taula detallada de matriu de quocients ($Vots / 1, Vots / 2, \dots$) marcant clarament quins quocients han obtingut escó.
-- **Hemicicle Parlamentari Visual:** Representació gràfica semiactiva en format d'arc parlamentari dels escons assignats.
-- **Interfície Moderna:** Disseny clean, responsive i adaptable en valencià utilitzant Tailwind CSS.
-
----
-
-## 🛠️ Com publicar aquesta web a GitHub Pages pas a pas
-
-Si vols publicar aquesta mateixa aplicació al teu compte de GitHub Pages (com l'exemple \`https://el-teu-usuari.github.io/hont-valencia/\`), segueix aquests senzills passos:
-
-### Pas 1: Crear un compte i un nou repositori
-1. Accedeix a [GitHub.com](https://github.com) i inicia sessió (o crea un compte gratuït).
-2. Fes clic al botó **"New"** (o en el signe **+** a dalt a la dreta -> **New repository**).
-3. Nom del repositori: **\`hont-valencia\`** (o el nom que penses adequat).
-4. Assegura't que estiga marcat com a **Public**.
-5. Fes clic en **"Create repository"**.
-
-### Pas 2: Creació dels fitxers del projecte
-1. Dintre del teu repositori, fes clic en **"uploading an existing file"** o crea un fitxer prement **"creating a new file"**.
-2. Anomena el fitxer principal com **\`index.html\`** i enganxa-hi el codi font HTML d'aquesta aplicació.
-3. Crea un segon fitxer anomenat **\`README.md\`** i enganxa-hi aquest text explicatiu.
-4. Fes clic en el botó verd **"Commit changes"** a la part inferior per desar els canvis.
-
-### Pas 3: Activar GitHub Pages
-1. Dins del repositori, ves a la pestanya **Settings** (Configuració) de la barra superior.
-2. Al menú lateral esquerre, selecciona la secció **Pages**.
-3. En la secció **"Build and deployment"** -> **Source**, tria **"Deploy from a branch"**.
-4. Sota **Branch**, selecciona **\`main\`** (o \`master\`) i la carpeta **\`/(root)\`**.
-5. Fes clic en **Save** (Guardar).
-
-### Pas 4: Veure la teua aplicació en línia
-En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL pública amb aquest format:
-👉 \`https://el-teu-usuari.github.io/hont-valencia/\`
-
----
-
-## 📐 Com funciona el Sistema D'Hondt?
-
-1. **Filtre / Barrera Electoral:** S'eliminen aquelles candidatures que no superen el percentatge mínim establit (per exemple el 3% o 5% sobre el total de vots vàlids a candidatures).
-2. **Càlcul de Quocients:** Els vots de cada candidatura restant es dividesixen successivament per $1, 2, 3, 4, \dots$ fins al nombre total d'escons a repartir.
-3. **Assignació:** Els escons s'atribueixen a les candidatures que obtinguen els quocients més grans en ordre decreixent.
-
----
-*Projecte desenvolupat per a la simulació de resultats electorals a la Província de València.*
-`;
-
-        // Initialize App
+        // Inicialització
         function init() {
             totalSeatsInput.value = state.seats;
             thresholdInput.value = state.threshold;
-            readmeTextarea.value = readmeMarkdown;
 
-            // Event Listeners
             totalSeatsInput.addEventListener('change', (e) => {
                 state.seats = Math.max(1, parseInt(e.target.value) || 1);
                 update();
@@ -419,28 +300,24 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
                 update();
             });
 
-            btnOpenReadme.addEventListener('click', () => readmeModal.classList.remove('hidden'));
-            btnCloseReadme.addEventListener('click', () => readmeModal.classList.add('hidden'));
-            btnCloseReadmeFooter.addEventListener('click', () => readmeModal.classList.add('hidden'));
-
             update();
         }
 
-        // Set predefined seat counts
+        // Establir escons predefinits
         function setSeats(count) {
             state.seats = count;
             totalSeatsInput.value = count;
             update();
         }
-
-        // Set predefined threshold values
+html
+        // Establir barrera predefinida
         function setThreshold(val) {
             state.threshold = val;
             thresholdInput.value = val;
             update();
         }
 
-        // Load Preset Dataset
+        // Carregar Preset
         function loadPreset(key) {
             if (presets[key]) {
                 state.seats = presets[key].seats;
@@ -453,7 +330,7 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
             }
         }
 
-        // Clear or Reset Parties
+        // Buidar o Reiniciar partits
         function resetParties() {
             state.parties = [
                 { name: 'Partit A', votes: 100000, color: '#3b82f6' },
@@ -462,29 +339,28 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
             update();
         }
 
-        // Add Party Row
+        // Afegir Partit
         function addParty() {
             const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
             const randomColor = colors[state.parties.length % colors.length];
             state.parties.push({
                 name: `Partit ${String.fromCharCode(65 + state.parties.length)}`,
                 votes: 10000,
-                color: randomColor
+                color: randomColorhtml
             });
             update();
         }
 
-        // Remove Party Row
+        // Eliminar Partit
         function removeParty(index) {
             if (state.parties.length <= 1) {
-                alert('Heus de tindre almenys un partit en la llista.');
                 return;
             }
             state.parties.splice(index, 1);
             update();
         }
 
-        // Update Party Data from Inputs
+        // Actualitzar dades de partit
         function updatePartyData(index, field, value) {
             if (field === 'name') {
                 state.parties[index].name = value;
@@ -496,27 +372,23 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
             update();
         }
 
-        // Main Calculation and UI Render Logic
+        // Actualització principal
         function update() {
             renderPartyTable();
 
-            // Total votes calculation
             const totalVotes = state.parties.reduce((acc, p) => acc + p.votes, 0);
             totalVotesDisplay.innerText = totalVotes.toLocaleString('ca-ES');
             validVotesDisplay.innerText = totalVotes.toLocaleString('ca-ES');
             seatCountBadge.innerText = `${state.seats} Diputats`;
 
-            // Calculate Threshold limit
-            const minVotesRequired = totalVotes * (state.threshold / 100);
+            const minVotesRequired = totalVhtmlotes * (state.threshold / 100);
 
-            // Filter parties meeting threshold
             const eligibleParties = state.parties.map((p, idx) => ({
                 ...p,
                 originalIndex: idx,
                 isEligible: p.votes >= minVotesRequired && p.votes > 0
             }));
 
-            // Generate Quotients Matrix
             let allQuotients = [];
             eligibleParties.forEach(p => {
                 p.quotients = [];
@@ -536,13 +408,10 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
                 }
             });
 
-            // Sort all quotients descending to pick top seats
             allQuotients.sort((a, b) => b.quotient - a.quotient);
 
-            // Select top N quotients for seats
             const winningQuotients = allQuotients.slice(0, state.seats);
 
-            // Assign seats to parties
             let partySeats = {};
             state.parties.forEach((_, idx) => partySeats[idx] = 0);
 
@@ -550,15 +419,14 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
                 partySeats[q.originalIndex] = (partySeats[q.originalIndex] || 0) + 1;
             });
 
-            // Render Results, Table, and Parliament Graph
             renderResultsSummary(partySeats, totalVotes);
             renderDhondtTable(eligibleParties, winningQuotients, minVotesRequired);
             renderParliamentArc(partySeats);
         }
 
-        // Render Input Table for Parties
+        // Renderització taula d'edició
         function renderPartyTable() {
-            partyTableBody.innerHTML = '';
+            partyTableBody.innerHTML html= '';
             state.parties.forEach((party, index) => {
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50 transition';
@@ -573,7 +441,7 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
                         <input type="number" value="${party.votes}" oninput="updatePartyData(${index}, 'votes', this.value)" class="w-full text-right bg-slate-50 border border-slate-200 rounded px-2 py-1 focus:ring-1 focus:ring-indigo-500 focus:outline-none font-semibold text-slate-900 text-sm">
                     </td>
                     <td class="py-2 text-center">
-                        <button onclick="removeParty(${index})" class="text-slate-400 hover:text-rose-600 transition p-1">
+                        <button onclick="removeParty(${index})" class="text-slate-400 hover:text-rose-600 transition p-1" title="Eliminar partit">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </td>
@@ -582,7 +450,7 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
             });
         }
 
-        // Render Summary Cards for Seat Results
+        // Renderització resum escons
         function renderResultsSummary(partySeats, totalVotes) {
             resultsSummaryList.innerHTML = '';
             state.parties.forEach((party, idx) => {
@@ -608,9 +476,8 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
             });
         }
 
-        // Render D'Hondt Quotient Table Matrix
+        // Renderització Matriu D'Hondt
         function renderDhondtTable(eligibleParties, winningQuotients, minVotesRequired) {
-            // Header Row
             dhondtTableHeader.innerHTML = `
                 <th class="p-2.5 font-bold">Partit</th>
                 <th class="p-2.5 text-right font-bold">Vots Totals</th>
@@ -619,14 +486,12 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
                 dhondtTableHeader.innerHTML += `<th class="p-2.5 text-center font-bold border-l border-slate-200">/ ${i}</th>`;
             }
 
-            // Body Rows
             dhondtTableBody.innerHTML = '';
             eligibleParties.forEach((p) => {
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50 border-b border-slate-100';
 
                 if (!p.isEligible) {
-                    // Party excluded by threshold
                     tr.innerHTML = `
                         <td class="p-2.5 font-bold flex items-center gap-1.5 text-slate-400">
                             <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${p.color}; opacity:0.5;"></span>
@@ -662,14 +527,13 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
             });
         }
 
-        // Render Semicircle Parliament Arc
+        // Renderització Hemicicle SVG
         function renderParliamentArc(partySeats) {
             parliamentSvg.innerHTML = '';
             
             const totalSeats = state.seats;
             let seatsArray = [];
 
-            // Build array of seat colors based on winners
             state.parties.forEach((p, idx) => {
                 const count = partySeats[idx] || 0;
                 for (let i = 0; i < count; i++) {
@@ -677,7 +541,6 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
                 }
             });
 
-            // Calculate rows and positions for semicircular layout
             const centerX = 200;
             const centerY = 180;
             const rowsCount = totalSeats > 25 ? 3 : 2;
@@ -688,7 +551,6 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
 
             for (let r = 0; r < rowsCount; r++) {
                 const radius = baseRadius + (r * radiusStep);
-                // Seats in this row proportional to radius length
                 const rowCapacity = Math.round((totalSeats / rowsCount) + (r - (rowsCount - 1) / 2) * 4);
                 
                 for (let i = 0; i < rowCapacity; i++) {
@@ -707,7 +569,6 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
                     circle.setAttribute('fill', seatData.color);
                     circle.setAttribute('class', 'seat cursor-pointer');
 
-                    // Tooltip
                     const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
                     title.textContent = `${seatData.name}`;
                     circle.appendChild(title);
@@ -717,21 +578,12 @@ En un parell de minuts, GitHub processarà el fitxer i t'oferirà una URL públi
                 }
             }
 
-            // Summary text under the SVG
             const absoluteMajority = Math.floor(totalSeats / 2) + 1;
             parliamentSummary.innerHTML = `
                 <p class="text-xs font-semibold text-slate-700">Majoria Absoluta: <span class="text-indigo-600 font-bold">${absoluteMajority} escons</span></p>
             `;
         }
 
-        // Copy README text to clipboard
-        function copyReadmeContent() {
-            readmeTextarea.select();
-            document.execCommand('copy');
-            alert('Contingut del README.md copiat al portapapers!');
-        }
-
-        // Initialize App on DOM Load
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
